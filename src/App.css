@@ -1,0 +1,148 @@
+.Active {
+  color: rgb(77, 126, 126);
+  text-decoration: none;
+  border-bottom: 3px solid rgb(141, 74, 19);
+  
+  
+}
+
+.Inactive{
+  text-decoration: none;
+  color: aliceblue;
+}
+
+.header{
+  background-image:url("./assets/img/delicious-pepperoni-pizza-stockcake.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+  text-align: center;
+}
+
+.pizzas {
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, fr);
+    row-gap: 35px;
+    justify-content: center;
+    padding: 30px;
+    
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    }
+  
+  .cardPizza {
+    display: block;
+    position: relative;
+    text-align: center;
+    padding: 10px;
+    width: 380px;
+    color: white;
+    background: #30303d;
+    border-top-left-radius: 10%;
+    overflow: hidden;
+   }
+  
+  
+  
+  .cardPizza > div{
+    border-top-left-radius: 10%;
+    padding: 10px;
+    background-clip: padding-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3{
+    font-size: 24px;
+  }
+  
+  h4{
+    font-size: 20px;
+  }
+  p{
+    font-size: 18px;
+  }
+  
+  
+  
+  .pizzaImg {
+    height: 300px;
+    width: 100%;
+    border-top-left-radius: 10%;
+   
+  }
+  
+  .tittleCard {
+    text-align: start;
+    padding-left: 12px;
+  }
+  .precio {
+    font-size: 19px;
+    font-weight: 600;
+  }
+  
+  
+  .botones {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+  }
+  
+  .añadir {
+    background-color: black;
+    color: white;
+  }
+
+  /* -----------------> Carrito de Compras <------------------ */
+
+.contenedorCart{
+  height: 800px;
+  display: "flex";
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 60px;
+  background-color: greenyellow;
+}
+.pizzaCart{
+ width: 300px;
+ justify-content: center;
+ text-align: center;
+ background-color:darkslategray;
+ border: 2px solid goldenrod;
+ 
+}
+
+.pizzaImgCart{
+  height: 250px;
+  width: 100%;
+}
+
+h3, p{
+  color: white;
+}
+.contadorPizza{
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+}
+.disminuir{
+  width: 30px;
+  background-color: #960b0b;
+  color: white;
+}
+
+.incrementar{
+  width: 30px;
+  background-color: green;
+  color: white;
+}
