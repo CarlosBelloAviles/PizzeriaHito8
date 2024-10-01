@@ -1,58 +1,70 @@
-import React from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [correo, setCorreo] = useState("");
-  const [contraseña, setContraseña] = useState("");
-  const [confirmarContraseña, setConfirmarContraseña] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const { register } = useContext(UserContext);
+  const navigate = useNavigate()
 
-  const manejarCambioCorreo = (e) => {
-    setCorreo(e.target.value);
+  const changeEmail = (e) => {
+    setEmail(e.target.value);
   };
 
-  const manejarCambioContraseña = (e) => {
-    setContraseña(e.target.value);
+  const changePassword = (e) => {
+    setPassword(e.target.value);
   };
 
-  const manejarCambioConfirmarContraseña = (e) => {
-    setConfirmarContraseña(e.target.value);
+  const changeConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
   };
 
-  const manejarEnvio = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!correo.trim() || !contraseña.trim() || !confirmarContraseña.trim()) {
-      alert("Todos los campos son obligatorios.");
+    if (!email || !password || !confirmPassword) {
+      setMessage("Todos los campos son obligatorios.");
       return;
     }
 
-    if (contraseña.length < 6) {
-      alert("La contraseña debe tener al menos 6 caracteres.");
+    if (password.length < 6) {
+      setMessage("El password debe tener al menos 6 caracteres.");
       return;
     }
 
-    if (contraseña !== confirmarContraseña) {
-      alert("Las contraseñas no coinciden.");
+    if (password !== confirmPassword) {
+      setMessage(
+        "El password y la confirmación del password deben ser iguales."
+      );
       return;
     }
 
-    alert("¡Registro exitoso!");
+    try {
+      await register(email, password);
+      setMessage("Registro exitoso!");
+      navigate('/')
+    } catch (error) {
+      setMessage("Error en el registro.");
+    }
   };
 
   return (
     <>
       <div className="container mt-5">
         <h2 className="text-center">Registro</h2>
-        <form className="w-50 mx-auto" onSubmit={manejarEnvio}>
+        <form className="w-50 mx-auto" onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Correo Electrónico</label>
             <input
               type="email"
               className="form-control"
               placeholder="Ingresa tu correo"
-              value={correo}
+              value={email}
               required
-              onChange={manejarCambioCorreo}
+              onChange={changeEmail}
             />
           </div>
           <div className="mb-3">
@@ -61,9 +73,9 @@ const Register = () => {
               type="password"
               className="form-control"
               placeholder="Ingresa tu contraseña"
-              value={contraseña}
+              value={password}
               required
-              onChange={manejarCambioContraseña}
+              onChange={changePassword}
             />
           </div>
           <div className="mb-3">
@@ -72,9 +84,9 @@ const Register = () => {
               type="password"
               className="form-control"
               placeholder="Confirma tu contraseña"
-              value={confirmarContraseña}
+              value={confirmPassword}
               required
-              onChange={manejarCambioConfirmarContraseña}
+              onChange={changeConfirmPassword}
             />
           </div>
           <div className="text-center">
@@ -83,6 +95,7 @@ const Register = () => {
             </button>
           </div>
         </form>
+        {message && <div className="alert mt-3">{message}</div>}
       </div>
     </>
   );

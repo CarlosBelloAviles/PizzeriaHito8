@@ -1,5 +1,5 @@
 import React from "react";
-import {  Link, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useUser } from "../context/UserContext";
 import { contador } from "../utils/contador";
@@ -8,7 +8,7 @@ const Navbar = () => {
   const { getTotal } = useCart();
   const total = getTotal();
   const { token, logout } = useUser();
-  const ClassActive = ({isActive}) => (isActive ? "Active" : "Inactive" )
+  const ClassActive = ({ isActive }) => (isActive ? "Active" : "Inactive");
 
   return (
     <>
@@ -29,17 +29,41 @@ const Navbar = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0 " style={{display:"flex", flexDirection:"row", alignItems:"center", gap:"12px"}}>
+            <ul
+              className="navbar-nav me-auto mb-2 mb-lg-0 "
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: "12px",
+              }}
+            >
               <li className="nav-item">
-                <NavLink className={ClassActive} to="/" >
+                <NavLink className={ClassActive} to="/">
                   🍕 Home
                 </NavLink>
               </li>
-              {token ? (
+              {!token ? (
                 <>
                   <li className="nav-item">
-                    <NavLink className={ClassActive} to="/profile
-                    " >
+                    <NavLink className={ClassActive} to="/login">
+                      🔐 Login
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className={ClassActive} to="/register">
+                      🔐 Register
+                    </NavLink>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <NavLink
+                      className={ClassActive}
+                      to="/profile
+                    "
+                    >
                       🔓 Profile
                     </NavLink>
                   </li>
@@ -50,19 +74,6 @@ const Navbar = () => {
                     >
                       🔐Logout
                     </button>
-                  </li>
-                </>
-              ) : (
-                <>
-                  <li className="nav-item">
-                    <NavLink className={ClassActive} to="/login" >
-                      🔐 Login
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className={ClassActive} to="/register">
-                      🔐 Register
-                    </NavLink>
                   </li>
                 </>
               )}

@@ -1,17 +1,28 @@
-import React from "react";
-import { useUser } from "../context/UserContext";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../context/UserContext";
 
 const Profile = () => {
-  const name = "UsuarioRandom369";
-    const email = "usuario_random369@gmail.com";
-  const { logout } = useUser();
+  const { user, logout, getUser } = useContext(UserContext);
+  const [profileUser , setProfileUser] = useState("");
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        await getUser(); 
+        setProfileUser(user); 
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProfile();
+  }, [user, getUser]);
 
   return (
     <div className="container mt-5">
       <div className="card-body text-center">
         <h2 className="card-title mb-2">Perfil de Usuario</h2>
-        <h4 className="card-text"  >{name}</h4>
-        <p className="card-text" style={{color:"black"}}>Email: {email}</p>
+        <h4 className="card-text"  >Email:{profileUser}</h4>
         <button className="btn btn-danger" onClick={logout}>
           Cerrar sesión
         </button>

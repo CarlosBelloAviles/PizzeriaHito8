@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
-import { pizzaCart } from "../utils/pizzas";
+import { UserContext } from "./UserContext";
 
 const CartContext = createContext();
 
@@ -9,6 +9,8 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const {token} = useContext(UserContext)
+  
 
   const incrementar = (id) => {
     setCart(
@@ -46,8 +48,21 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  const pagar = () => {
-    alert("Sin funcionamiento por ahora");
+ 
+
+  const simulacro = async () => {
+    const response = await fetch("http://localhost:5000/api/checkouts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        cart: {cart},
+      }),
+    });
+    let data = await response.json();
+    alert(data?.error || data.message);
   };
 
   return (
@@ -58,9 +73,8 @@ export const CartProvider = ({ children }) => {
         decrementar,
         removerPizza,
         getTotal,
-        pagar,
-        cart,
         setCart,
+        simulacro
       }}
     >
       {children}
